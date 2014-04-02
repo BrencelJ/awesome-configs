@@ -1,0 +1,15 @@
+#!/bin/bash
+#bssid=`wicd-cli -yd | grep -oE '([0-9A-Z]{2}:{1}){5}[0-9A-Z]{2}'`
+#essid=`wicd-cli -yd | grep -oE 'Essid: [[:graph:]]+'`
+lvds=`xrandr | grep -oE 'LVDS1 [[:graph:]]+'`
+vga=`xrandr | grep -oE 'VGA1 [[:graph:]]+'`
+hdmi=`xrandr | grep -oE 'HDMI1 [[:graph:]]+'`
+
+#if ([[ $bssid == '00:1D:1C:39:51:15' ]] && [[ $essid == 'Essid: Ha-WiFi' ]] && [[ $lvds == 'LVDS1 connected' ]] && [[ $vga == 'VGA1 connected' ]] && [[ $hdmi == 'HDMI1 connected' ]]) ; then
+if ([[ $lvds == 'LVDS1 connected' ]] && [[ $vga == 'VGA1 connected' ]] && [[ $hdmi == 'HDMI1 connected' ]]) ; then
+  xrandr --output LVDS1 --off --output HDMI1 --auto
+  xrandr --output VGA1 --auto --left-of HDMI1
+else
+  xrandr --output HDMI1 --off --output VGA1 --off
+  xrandr --output LVDS1 --auto
+fi

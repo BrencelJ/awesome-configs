@@ -1,0 +1,35 @@
+#!/bin/sh
+
+CURRENT=$(cat /sys/class/backlight/acpi_video0/brightness)
+
+
+case "$CURRENT" in
+
+8)
+echo -n 8 > /sys/class/backlight/acpi_video0/brightness;
+;;
+7)
+echo -n 8 > /sys/class/backlight/acpi_video0/brightness;
+;;
+6)
+echo -n 7 > /sys/class/backlight/acpi_video0/brightness;
+;;
+5)
+echo -n 6 > /sys/class/backlight/acpi_video0/brightness;
+;;
+4)
+echo -n 5 > /sys/class/backlight/acpi_video0/brightness;
+;;
+3)
+echo -n 4 > /sys/class/backlight/acpi_video0/brightness;
+;;
+2)
+echo -n 3 > /sys/class/backlight/acpi_video0/brightness;
+;;
+1)
+echo -n 2 > /sys/class/backlight/acpi_video0/brightness;
+;;
+0)
+echo -n 1 > /sys/class/backlight/acpi_video0/brightness;
+;;
+esac
