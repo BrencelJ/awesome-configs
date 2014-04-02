@@ -107,8 +107,8 @@ require("volumerc")
 require("batteryrc")
 -- Create network (UL/DL) widget
 require("networkrc")
-
---require ("pluggablesrc")
+-- Create icon for devices that are plugged in
+require("pluggablesrc")
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -181,6 +181,7 @@ for s = 1, screen.count() do
     left_layout:add(mypromptbox[s])
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+    right_layout:add(imagepluggableswidget)
     right_layout:add(wibox.widget.textbox("│"))
     right_layout:add(mylayoutbox[s])
     right_layout:add(wibox.widget.textbox("│"))
@@ -276,11 +277,6 @@ client.connect_signal("manage", function (c, startup)
     end)
 
     if not startup then
-        -- Set the windows at the slave,
-        -- i.e. put it at the end of others instead of setting it master.
-        -- awful.client.setslave(c)
-
-        -- Put windows in a smart way, only if they does not set an initial position.
         if not c.size_hints.user_position and not c.size_hints.program_position then
             awful.placement.no_overlap(c)
             awful.placement.no_offscreen(c)

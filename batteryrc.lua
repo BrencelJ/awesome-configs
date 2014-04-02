@@ -18,7 +18,7 @@ function BatteryImage()
     icon = images .. "ac.png"
   elseif open_status:match("0") then
     if battery <= 100 and battery > 75 then
-      icon = mages .. "battery-hi.png"
+      icon = images .. "battery-hi.png"
     elseif battery <= 75 and battery > 40 then
       icon = images .. "battery-med.png"
     elseif battery <= 40 and battery > 15 then
