@@ -76,8 +76,8 @@ if screen.count() == 1 then
   tag = awful.tag(tag.names, 1, tag.layout)
 elseif screen.count() == 2 then
   tag_one = { 
-    names  = { "term", "chat", "game", "music", "misc"},
-    layout = { layouts[3], layouts[2], layouts[1], layouts[2], layouts[1]},
+    names  = { "term", "chat", "music", "game", "misc"},
+    layout = { layouts[3], layouts[2], layouts[2], layouts[1], layouts[1]},
   }
   tag_two = { 
     names  = { "web", "media", "news", "torr", "misc"},
