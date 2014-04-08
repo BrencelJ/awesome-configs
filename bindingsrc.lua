@@ -6,6 +6,15 @@ require("toggle_mouse")
 require("toggle_touchpad")
 -- Display 
 require("displayrc")
+-- Drop-down terminal
+require ("dropdownrc")
+local quake = require("quake")
+local quakeconsole = {}
+for s = 1, screen.count() do
+   quakeconsole[s] = quake({ terminal = config.terminal,
+   			     height = 0.90,
+			     screen = s })
+end
 
 -- {{{ Mouse bindings
 -- }}}
@@ -30,6 +39,9 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "#169",function() os.execute(config .. "/scripts/toggle_displays") end),
 -- System tray toggle
     awful.key({ modkey,           }, "s", function() minitray.toggle() end ),
+-- Drop-down console
+    awful.key({ modkey }, "#65", function () quakeconsole[mouse.screen]:toggle() end),
+
 -- Layout manipulation
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
     awful.key({ "Mod1",           }, "Tab",
@@ -48,9 +60,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
     awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
+
 -- Prompt
     awful.key({ "Mod1", },"F2",function () mypromptbox[mouse.screen]:run() end),
-    awful.key({ modkey }, "x",
+    awful.key({ modkey, "Control" }, "x",
               function ()
                   awful.prompt.run({ prompt = "Run Lua code: " },
                   mypromptbox[mouse.screen].widget,
@@ -59,12 +72,30 @@ globalkeys = awful.util.table.join(
               end),
 -- Menubar
     awful.key({ modkey }, "r", function() menubar.show() end),
+
 -- Volume
     awful.key({ }, "#122",function() VolumeImage("down") end),
     awful.key({ }, "#123",function() VolumeImage("up") end),
     awful.key({ }, "#121",function() VolumeImage() end),
-    awful.key({ modkey }, "-",function() VolumeImage("down") end),
-    awful.key({ modkey }, "+",function() VolumeImage("up") end),
+    awful.key({ modkey, "Shift" }, "-",function() VolumeImage("down") end),
+    awful.key({ modkey, "Shift" }, "+",function() VolumeImage("up") end),
+
+-- mpd music control
+   awful.key({ modkey }, "<", function() awful.util.spawn( "ncmpcpp toggle" ) end),
+   awful.key({ modkey }, "y", function() awful.util.spawn( "ncmpcpp prev" ) end),
+   awful.key({ modkey }, "x", function() awful.util.spawn( "ncmpcpp next" ) end),
+   awful.key({ modkey }, "-", function() awful.util.spawn( "ncmpcpp volume -5" ) end),
+   awful.key({ modkey }, "+", function() awful.util.spawn( "ncmpcpp volume +5" ) end),
+   awful.key({ modkey }, "o", 
+   	     function()
+	        if naughty.destroy(popupsong) ~= true then
+		popupsong = naughty.notify({
+			text = string.match(io.popen('ncmpcpp --now-playing "{%a - %t}|{%f}"'):read("*all"),"(.+)%s"),
+			timeout = 5,
+			screen = s
+		})
+		end
+	     end),
 
 -- Resize windows
     awful.key({ modkey, "Control"}, "Down",  function () awful.client.moveresize( 0,  0, 0, 15) end),
