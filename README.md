@@ -4,7 +4,15 @@ awesome-configs
 My configuration files for Awesome window manager (AwesomeWM).
 
 What I have preinstalled:
-- Ranger
-- Lain
-- Udiskie
-
+- ranger
+- lain - https://github.com/copycat-killer/lain
+- udiskie
+- rxvt-unicode
+- mpd
+- ncmpcpp
+- htop
+- bmon
+- smplayer
+- skype
+- chromium
+- transmission
